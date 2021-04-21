@@ -1,22 +1,28 @@
+import re
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_weather():
-    print("[Today's Weather]")
-    url = "https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&qvt=0&query=%EB%AF%B8%EA%B5%AD%20%EB%8C%88%EB%9F%AC%EC%8A%A4%20%EB%82%A0%EC%94%A8"
+def create_soup(url):
     res = requests.get(url)
     res.raise_for_status()
     soup = BeautifulSoup(res.text, "lxml")
-    cast = soup.find("p", attrs = {"class":"cast_txt"}).get_text()
-    curr_temp = soup.find("p", attrs = {"class":"info_temperature"}).get_text()
-    min_temp = soup.find("span", attrs = {"class":"min"}).get_text()
-    max_temp = soup.find("span", attrs = {"class":"max"}).get_text()
-    morning_rain_rate = soup.find("span", attrs = {"class":"point_time_morning"}).get_text().strip()
-    afternoon_rain_rate = soup.find("span", attrs = {"class":"point_time_afternoon"}).get_text().strip()
+    return soup
+
+def scrape_weather():
+    print("[Today's Weather]")
+    url = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EC%84%9C%EC%9A%B8+%EB%82%A0%EC%94%A8"
+    soup = create_soup(url)
+    cast = soup.find("p", attrs={"class":"cast_txt"}).get_text()    
+    curr_temp = soup.find("p", attrs={"class":"info_temperature"}).get_text().replace("도씨", "")
+    min_temp = soup.find("span", attrs={"class":"min"}).get_text()
+    max_temp = soup.find("span", attrs={"class":"max"}).get_text()
+    morning_rain_rate = soup.find("span", attrs={"class":"point_time morning"}).get_text().replace("강수확률", "").strip() 
+    afternoon_rain_rate = soup.find("span", attrs={"class":"point_time afternoon"}).get_text().replace("강수확률", "").strip() 
 
     print(cast)
     print("Current {} (Min {} / Max {})".format(curr_temp, min_temp, max_temp))
-    print("Chance of Rain (Morning {} / Afternoon {})".format(morning_rain_rate, afternoon_rain_rate))
+    print("Chace of Rain (AM {} / PM {})".format(morning_rain_rate, afternoon_rain_rate))
+    print()
 
 if __name__ == "__main__":
-    scrape_weather() 
+    scrape_weather()
