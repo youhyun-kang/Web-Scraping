@@ -1,0 +1,24 @@
+/School/Grade/Major/Student[2]
+//*[@Class="1-1-5"]
+
+/html/body/div/div/div/div/span/a...
+//*[@id="login"] #id=login within the entire document
+
+<School Name = "ABC High School">
+    <Grade = "Freshman">
+        <Major value = "Science">
+            <Student value = "No.1" Class="1-1-1"> Amy </Student>
+            <Student value = "No.2" Class="1-1-2"> Brad </Student>
+            <Student value = "No.3" Class="1-1-3"> Charlie </Student>
+            <Student value = "No.4" Class="1-1-4"> Derek </Student>
+            <Student value = "No.5" Class="1-1-5"> Amy </Student>
+        </Major>
+        <Major value = "Technology"/>
+        <Major value = "Engineering"'>
+        <Major value = "Math"/>
+    </Grade>
+
+    <Grade = "Sophomore"/>
+    <Grade = "Junior"/>
+    <Grade = "Senior"/>
+</School>
