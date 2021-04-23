@@ -25,15 +25,17 @@ def scrape_weather():
 
 def scrape_headline_news():
     print("[News Headlines]")
-    url = "https://www.usatoday.com/news/"
+    url = "https://www.bbc.com/news"
     soup = create_soup(url)
-
-    news_list = soup.find("div", attrs={"class":"gnt_m_tl_c"}).find_all("data-tb-shadow-region-title" == "0", limit=3)
-    for index, news in enumerate(news_list):
-        title = news.find("a").get_text().strip()
-        link = url + news.find("a")["href"]
-        print_news(index, title, link)
-    print()
+    # cast = soup.find("h3", attrs ={"class":"gs-c-promo-heading__title gel-paragon-bold nw-o-link-split__text"}).get_text()    
+    # print(cast)
+    news_list = soup.find("h3", attrs={"class"}).find_all(limit=3)
+    print(news_list)   
+    # for index, news in enumerate(news_list):
+    #     title = news.div.a.h3.get_text()
+    #     link = url + news.find("a")["href"]
+    #     print_news(index, title, link)
+    # print()
 
 if __name__ == "__main__":
     scrape_weather()
