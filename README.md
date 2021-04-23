@@ -1,5 +1,5 @@
 # Web Scraping Projects
-Various applications made using web scraping techniques.
+Various web scraping projects 
 
 ## List of Projects
 1. Today's Weather (Idea Source: Nado Coding https://nadocoding.tistory.com/)
