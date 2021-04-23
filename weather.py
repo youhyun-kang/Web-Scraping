@@ -10,19 +10,31 @@ def create_soup(url):
 
 def scrape_weather():
     print("[Today's Weather]")
-    url = "https://search.naver.com/search.naver?sm=top_hty&fbm=1&ie=utf8&query=%EC%84%9C%EC%9A%B8+%EB%82%A0%EC%94%A8"
+    url = "https://weather.com/weather/tenday/l/Bedford+TX?canonicalCityId=87220e95df4e2392abb2a4653a37d5089e152446497b7ce6997caead596cfc2f"
     soup = create_soup(url)
-    cast = soup.find("p", attrs={"class":"cast_txt"}).get_text()    
-    curr_temp = soup.find("p", attrs={"class":"info_temperature"}).get_text().replace("도씨", "")
-    min_temp = soup.find("span", attrs={"class":"min"}).get_text()
-    max_temp = soup.find("span", attrs={"class":"max"}).get_text()
-    morning_rain_rate = soup.find("span", attrs={"class":"point_time morning"}).get_text().replace("강수확률", "").strip() 
-    afternoon_rain_rate = soup.find("span", attrs={"class":"point_time afternoon"}).get_text().replace("강수확률", "").strip() 
+    cast = soup.find("p data-testid" == "wxPhrase", attrs={"class":"DailyContent--narrative--3AcXd"}).get_text()    
+    curr_temp = soup.find("span data-testid" == "TemperatureValue", attrs={"class":"DailyContent--temp--_8DL5"}).get_text()
+    min_temp = soup.find("span data-testid" == "TemperatureValue", attrs={"class":"DetailsSummary--lowTempValue--1DlJK"}).get_text()
+    max_temp = soup.find("span data-testid" == "TemperatureValue", attrs={"class":"DetailsSummary--highTempValue--3x6cL"}).get_text()
+    rain_rate = soup.find("span data-testid" == "PercentageValue", attrs={"class":"DailyContent--value--3Xvjn"}).get_text()
 
     print(cast)
     print("Current {} (Min {} / Max {})".format(curr_temp, min_temp, max_temp))
-    print("Chace of Rain (AM {} / PM {})".format(morning_rain_rate, afternoon_rain_rate))
+    print("Chace of Rain {}".format(rain_rate))
+    print()
+
+def scrape_headline_news():
+    print("[News Headlines]")
+    url = "https://www.usatoday.com/news/"
+    soup = create_soup(url)
+
+    news_list = soup.find("div", attrs={"class":"gnt_m_tl_c"}).find_all("data-tb-shadow-region-title" == "0", limit=3)
+    for index, news in enumerate(news_list):
+        title = news.find("a").get_text().strip()
+        link = url + news.find("a")["href"]
+        print_news(index, title, link)
     print()
 
 if __name__ == "__main__":
     scrape_weather()
+    scrape_headline_news() 
