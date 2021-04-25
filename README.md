@@ -1,5 +1,4 @@
 # Web Scraping Projects
-Web scraping framework for the upcoming projects 
 
 ## List of Projects
 1. Personal Assistant
