@@ -51,17 +51,20 @@ def scrape_headline_news():
         print(" (Link : {})". format(link))
     print()
 
-# def scrape_spanish_phrase():
-#     print("[Spanish Phrase of the Day]")
-#     url = "https://www.transparent.com/word-of-the-day/today/spanish.html"
-#     soup = create_soup(url)
-#     words = soup.find("p", attrs = {"class":re.compile("^js-wotd-word")})
-#     for word in words():
-#         spanish = word.find("span").get_text()
-#     print(word)
+def scrape_idiom():
+    print("[Idiom of the Day]")
+    url = "https://www.englishclub.com/ref/idiom-of-the-day.php"
+    soup = create_soup(url)
+    sentences = soup.find("h2", attrs = {"class":"clr-green"}).get_text()
+    search = soup.find_all("p")
+    meaning = search[1].get_text()
+
+    print("\"{}\"".format(sentences))
+    print("Meaning: {}".format(meaning))
+    print()
 
    
 if __name__ == "__main__":
     scrape_weather()
     scrape_headline_news() 
-    # scrape_spanish_phrase()
+    scrape_idiom()
